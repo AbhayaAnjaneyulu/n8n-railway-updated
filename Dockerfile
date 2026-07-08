@@ -1,10 +1,11 @@
+FROM alpine:3.20 AS gosu-src
+RUN apk add --no-cache gosu
+
 FROM n8nio/n8n:2.28.6
 
 USER root
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends gosu \
-    && rm -rf /var/lib/apt/lists/*
+COPY --from=gosu-src /usr/bin/gosu /usr/local/bin/gosu
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
