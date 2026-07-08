@@ -6,4 +6,4 @@ set -e
 # before dropping privileges.
 chown -R node:node /home/node/.n8n
 
-exec su-exec node tini -- /docker-entrypoint.sh "$@"
+exec gosu node tini -- /docker-entrypoint.sh "$@"
